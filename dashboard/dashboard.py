@@ -6,11 +6,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 # Load the datasets
-customers_df = pd.read_csv("../data/customers_dataset.csv")
-orders_df = pd.read_csv("../data/orders_dataset.csv")
-order_items_df = pd.read_csv("../data/order_items_dataset.csv")
-order_reviews_df = pd.read_csv("../data/order_reviews_dataset.csv")
-products_df = pd.read_csv("../data/products_dataset.csv")
+customers_df = pd.read_csv("data/customers_dataset.csv")
+orders_df = pd.read_csv("data/orders_dataset.csv")
+order_items_df = pd.read_csv("data/order_items_dataset.csv")
+order_reviews_df = pd.read_csv("data/order_reviews_dataset.csv")
+products_df = pd.read_csv("data/products_dataset.csv")
 
 # Convert date columns to datetime
 orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])
