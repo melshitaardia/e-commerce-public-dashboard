@@ -4,11 +4,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 # Load the datasets
-customers_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/customers_dataset.csv")
-orders_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/orders_dataset.csv")
-order_items_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/order_items_dataset.csv")
-order_reviews_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/order_reviews_dataset.csv")
-products_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/products_dataset.csv")
+customers_df = pd.read_csv("data/customers_dataset.csv")
+orders_df = pd.read_csv("data/orders_dataset.csv")
+order_items_df = pd.read_csv("data/order_items_dataset.csv")
+order_reviews_df = pd.read_csv("data/order_reviews_dataset.csv")
+products_df = pd.read_csv("data/products_dataset.csv")
 
 # Convert date columns to datetime
 orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])
@@ -22,7 +22,6 @@ ecommerce_df = ecommerce_df.merge(order_reviews_df, on='order_id')
 # Calculate delivery time
 ecommerce_df['delivery_time'] = (ecommerce_df['order_delivered_customer_date'] - ecommerce_df['order_purchase_timestamp']).dt.days
 
-# Streamlit App Layout
 st.title("E-Commerce Data Analysis Dashboard")
 
 # Date Picker for filtering
