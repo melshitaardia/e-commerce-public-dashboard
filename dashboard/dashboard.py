@@ -1,16 +1,14 @@
-# dashboard.py
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
 # Load the datasets
-customers_df = pd.read_csv("data/customers_dataset.csv")
-orders_df = pd.read_csv("data/orders_dataset.csv")
-order_items_df = pd.read_csv("data/order_items_dataset.csv")
-order_reviews_df = pd.read_csv("data/order_reviews_dataset.csv")
-products_df = pd.read_csv("data/products_dataset.csv")
+customers_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/customers_dataset.csv")
+orders_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/orders_dataset.csv")
+order_items_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/order_items_dataset.csv")
+order_reviews_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/order_reviews_dataset.csv")
+products_df = pd.read_csv("C:/Users/USER/E-Commerce Public Dashboard/data/products_dataset.csv")
 
 # Convert date columns to datetime
 orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])
@@ -38,7 +36,12 @@ filtered_data = ecommerce_df[(ecommerce_df['order_purchase_timestamp'] >= pd.to_
 
 # Sales Growth by Category
 st.header("Sales Growth by Category")
-monthly_category_df = filtered_data.resample(rule='M', on='order_purchase_timestamp').product_category_name.value_counts().unstack(fill_value=0)
+latest_date = filtered_data['order_purchase_timestamp'].max()
+one_year_ago = latest_date - pd.DateOffset(years=1)
+
+last_year_df = filtered_data[(filtered_data['order_purchase_timestamp'] >= one_year_ago)]
+
+monthly_category_df = last_year_df.resample(rule='M', on='order_purchase_timestamp').product_category_name.value_counts().unstack(fill_value=0)
 monthly_category_df.index = monthly_category_df.index.strftime('%B %Y')
 monthly_category_df = monthly_category_df.reset_index()
 
@@ -71,3 +74,10 @@ fig3 = px.histogram(customer_orders, x='order_count',
                     labels={'order_count': 'Number of Orders'},
                     nbins=30)
 st.plotly_chart(fig3)
+
+# Insight Section
+st.header("Key Insights")
+st.write("- **Top-Selling Category:** 'alimentos' memiliki penjualan tertinggi dalam 1 tahun terakhir.")
+st.write("- **Delivery Impact:** Pengiriman lebih cepat dari 3 hari cenderung mendapatkan rating di atas 4.5.")
+st.write("- **Customer Behavior:** Sebagian besar pelanggan melakukan 1-2 transaksi per tahun, namun pelanggan dengan lebih dari 5 transaksi cenderung berbelanja di kategori produk yang sedang tren.")
+
